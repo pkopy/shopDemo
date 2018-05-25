@@ -4,7 +4,58 @@
 
     <meta charset="UTF-8">
     <!--<link rel="stylesheet" type="text/css" media="screen" href="../static/style.css" />-->
-    <title>Rejestracja</title>
+    <title>Sklep Bootcamp</title>
+    <style>
+        body {
+            font-family: arial, sans-serif;
+        }
+        .button{
+            background-color: #dff0f1;
+            padding: 5px;
+            border-radius: 8px;
+            margin: 2px;
+            border: 1px solid #3293cc;
+            cursor: pointer;
+
+
+        }
+        .button:hover {
+            background-color: #ace3e6;
+        }
+        table {
+
+            border-collapse: collapse;
+            width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 1em;
+            padding: 1em;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        a:link, a:visited {
+            background-color: #dff0f1;
+            margin: 2px;
+            padding: 5px;
+            border-radius: 8px;
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border: 1px solid #3293cc;
+            font-size: x-small;
+        }
+        a:hover, a:active {
+            background-color: #ace3e6;
+        }
+
+    </style>
 </head>
 <body>
 <div style="text-align: center">
@@ -27,13 +78,16 @@
 <div class="ifr">
 
 
+    <div th:text="${'Twój koszyk ma: ' + basket.basketLength()}">
+
+    </div>
     <table align="center" border="1">
         <tr>
-            <td> Nazwa firmy</td>
-            <td> Nazwa produktu</td>
-            <td> Kod kreskowy</td>
-            <td> Waga</td>
-            <td> Koszyk </td>
+            <th> Nazwa firmy</th>
+            <th> Nazwa produktu</th>
+            <th> Kod kreskowy</th>
+            <th> Waga</th>
+            <th> Koszyk </th>
         </tr>
 
         <tr th:each="item : ${allBarcodes}">
@@ -42,12 +96,12 @@
             <td th:text="${item.getBarcode()}"></td>
             <td th:text="${item.getWeight()}"></td>
             <td>
-                <button>Dodaj do koszyka</button>
+                <a th:href="${basket.isInBasket(item.getId())? '/' :'/add/' + item.getId()}" th:text="${basket.isInBasket(item.getId()) ? 'Usuń z koszyka':'Dodaj do koszyka' }"></a>
             </td>
         </tr>
     </table>
 
-   
+
 
 </div>
 
