@@ -56,6 +56,7 @@ public class MainController {
 
         model.addAttribute("barcodeForm", new BarcodeForm());
         model.addAttribute("allBarcodes", barcodeEntities);
+        model.addAttribute("basket", basketService);
         return "addBarcode";
 
     }
