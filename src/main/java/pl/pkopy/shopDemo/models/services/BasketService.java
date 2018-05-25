@@ -33,6 +33,20 @@ public class BasketService {
         barcodeEntityList.add(barcodeEntity);
     }
 
+    public void removeProductFromBasket(int id){
+//        for(BarcodeEntity entity : barcodeEntityList){
+//            if(entity.getId() == id) {
+//                System.out.println(entity.getId());
+//                barcodeEntityList.remove(entity);
+//            }
+//        }
+        for(int i = 0; i < barcodeEntityList.size(); i++){
+            if(barcodeEntityList.get(i).getId() == id){
+                barcodeEntityList.remove(i);
+            }
+        }
+    }
+
     public boolean isInBasket(int id){
         return barcodeEntityList.stream().anyMatch(s -> s.getId() == id);
     }

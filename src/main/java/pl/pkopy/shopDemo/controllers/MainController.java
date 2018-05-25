@@ -62,9 +62,16 @@ public class MainController {
     @GetMapping("/add/{id}")
 
 
-    public String add(@PathVariable("id") int id){
+    public String addToBasket(@PathVariable("id") int id){
 
         basketService.addProductToBasket(barcodeRepository.findById(id).orElseThrow(IllegalStateException::new));
+        return "redirect:/";
+    }
+
+    @GetMapping("/remove/{id}")
+    public String removeFromBasket(@PathVariable("id") int id){
+
+        basketService.removeProductFromBasket(id);
         return "redirect:/";
     }
 }
