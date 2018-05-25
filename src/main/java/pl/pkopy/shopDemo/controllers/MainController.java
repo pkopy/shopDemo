@@ -43,6 +43,7 @@ public class MainController {
     @GetMapping("/search")
     public String search(Model model){
         model.addAttribute("barcodeForm", new BarcodeForm());
+        model.addAttribute("basket", basketService);
 
         return "search";
     }
