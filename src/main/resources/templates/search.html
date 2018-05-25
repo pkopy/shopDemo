@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta charset="UTF-8">
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="../static/style.css" />-->
+    <title>Rejestracja</title>
+</head>
+<body>
+<div style="text-align: center">
+
+
+
+    <div th:each="item : ${allBarcodes}">
+        <h1 th:text="${item.getProductName()}"></h1>
+        <small th:text="${item.getProductCompany()}"></small>
+        <br>
+        Kod kreskowy: <span th:text="${item.getBarcode()}"></span>
+        <small th:text="${item.getWeight()}"></small>
+    </div>
+
+
+
+
+</div>
+<script>
+        const searchDiv = document.querySelector('div');
+        console.log(searchDiv);
+        searchDiv.addEventListener('click', function(){
+        console.log(searchDiv);
+        });
+   </script>
+</body>
+</html>
