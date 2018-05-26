@@ -18,14 +18,13 @@
             font-size: x-small;
             text-align: center;
             color: #000;
-
-
         }
         .add a, .delete a {
             text-decoration: none;
             text-align: center;
             color: #000;
             padding: 5px;
+            display: inline-block;
 
         }
         .add:hover {
@@ -41,6 +40,7 @@
             text-align: center;
             text-decoration: none;
             color: #000;
+            display: inline-block;
 
 
         }
@@ -64,21 +64,13 @@
         tr:nth-child(even) {
             background-color: #dddddd;
         }
-        a:link, a:visited {
-            <!--background-color: #dff0f1;-->
-            <!--margin: 2px;-->
-            <!--padding: 5px;-->
-            <!--border-radius: 8px;-->
-            color: #000;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            <!--border: 1px solid #3293cc;-->
-            <!---->
+        .search .add, .add-product .add{
+            font-size: small;
+            padding: 3px;
+            width: 70px;
+
         }
-        <!--.add a:hover, a:active {-->
-            <!--background-color: #ace3e6;-->
-        <!--}-->
+
 
 
     </style>
@@ -86,27 +78,37 @@
 <body>
 <div style="text-align: center">
 
-    <form method="post" action="/" th:object="${barcodeForm}">
-        Nazwa firmy: : <input type="text" th:field="*{companyName}">
-        Nazwa produktu:: <input type="text" th:field="*{productName}">
-        Kod kreskowy: <input type="text" maxlength="13" th:field="*{barcode}">
-        Waga: <input type="number" max="200" th:field="*{weight}">
-        <input type="submit" value="Wyślij">
-    </form>
+    <h1>Sklep Bootcamp Java 2018</h1>
+
+    <div class="add-product">
+        <form method="post" action="/" th:object="${barcodeForm}">
+            Nazwa firmy: <input type="text" th:field="*{companyName}">
+            Nazwa produktu: <input type="text" th:field="*{productName}">
+            Kod kreskowy: <input type="text" maxlength="13" th:field="*{barcode}">
+            Waga: <input type="number" max="200" th:field="*{weight}">
+            <input class="add" type="submit" value="Dodaj">
+        </form>
+    </div>
 
     <br><br>
 
-    <form method="post" action="/search">
-        <input type="text" th:name="search" placeholder="Czego szukasz">
-        <input type="submit" value="Wyślij">
-    </form>
-    <br><br>
-<div class="ifr">
-
-
-    <a href="/basket"><div th:text="${'Twój koszyk ma: ' + basket.basketLength()}"></a>
+    <div class="search">
+        <form method="post" action="/search">
+            <input type="text" th:name="search" placeholder="Czego szukasz">
+            <input class="add" type="submit" value="Szukaj">
+            <!--<div type="submit">WYślij</div>-->
+        </form>
 
     </div>
+
+    <br><br>
+
+
+
+    <a href="/basket" ><div th:text="${'Twój koszyk ma: ' + basket.basketLength()}"></div></a>
+
+
+
     <table align="center" border="1">
         <tr>
             <th> Nazwa firmy</th>
@@ -124,8 +126,7 @@
             <td>
                 <div th:class="${basket.isInBasket(item.getId())} ? 'delete' : 'add'">
 
-                <a
-                        th:text="${basket.isInBasket(item.getId()) ? 'Usuń z koszyka':'Dodaj do koszyka' }"
+                <a th:text="${basket.isInBasket(item.getId()) ? 'Usuń z koszyka':'Dodaj do koszyka' }"
                    th:href="${(basket.isInBasket(item.getId())? '/remove/' :'/add/') + item.getId()}"
                    ></a>
                 </div>

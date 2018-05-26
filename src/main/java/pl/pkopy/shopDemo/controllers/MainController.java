@@ -27,6 +27,7 @@ public class MainController {
         model.addAttribute("barcodeForm", new BarcodeForm());
         model.addAttribute("allBarcodes", barcodeRepository.findAll());
         model.addAttribute("basket", basketService);
+        basketService.setOnSite(false);
 
         return "addBarcode";
     }
@@ -68,21 +69,33 @@ public class MainController {
     public String addToBasket(@PathVariable("id") int id){
 
         basketService.addProductToBasket(barcodeRepository.findById(id).orElseThrow(IllegalStateException::new));
-        return "redirect:/basket";
+        basketService.setWeightOfProduct();
+
+        if(basketService.isOnSite()){
+            return "redirect:/basket";
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/remove/{id}")
     public String removeFromBasket(@PathVariable("id") int id){
 
         basketService.removeProductFromBasket(id);
+        basketService.setWeightOfProduct();
+        if(basketService.isOnSite()){
+            return "redirect:/basket";
+        }
         return "redirect:/";
     }
 
     @GetMapping("/basket")
     public String basket(Model model) {
+
         model.addAttribute("barcodeForm", new BarcodeForm());
         model.addAttribute("basket", basketService);
         model.addAttribute("allBarcodes", basketService.getBarcodeEntityList());
+        model.addAttribute("weight", basketService.getWeightOfProduct());
+        basketService.setOnSite(true);
 
         return "basket";
     }

@@ -12,9 +12,13 @@ import java.util.List;
 @Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class BasketService {
     private List<BarcodeEntity> barcodeEntityList;
+    private boolean onSite;
+    private int weightOfProduct;
 
     public BasketService() {
         barcodeEntityList = new ArrayList<>();
+        onSite = false;
+        weightOfProduct = 0;
     }
 
     public List<BarcodeEntity> getBarcodeEntityList() {
@@ -23,6 +27,7 @@ public class BasketService {
 
     public void setBarcodeEntityList(List<BarcodeEntity> barcodeEntityList) {
         this.barcodeEntityList = barcodeEntityList;
+
     }
 
     public int basketLength() {
@@ -46,6 +51,28 @@ public class BasketService {
             }
         }
     }
+
+    public boolean isOnSite() {
+        return onSite;
+    }
+
+    public void setOnSite(boolean onSite) {
+        this.onSite = onSite;
+    }
+
+    public int getWeightOfProduct() {
+        return weightOfProduct;
+    }
+
+    public void setWeightOfProduct() {
+        weightOfProduct = 0;
+        for(BarcodeEntity barcodeEntity : barcodeEntityList){
+            weightOfProduct += barcodeEntity.getWeight();
+        }
+    }
+
+
+
 
     public boolean isInBasket(int id){
         return barcodeEntityList.stream().anyMatch(s -> s.getId() == id);
