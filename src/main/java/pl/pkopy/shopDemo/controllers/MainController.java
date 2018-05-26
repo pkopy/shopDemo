@@ -51,13 +51,14 @@ public class MainController {
     @PostMapping("/search")
     public String searchPost(@RequestParam("search") String search, Model model){
         List<BarcodeEntity> barcodeEntities = new ArrayList<>();
+        barcodeEntities.removeAll(barcodeEntities);
         barcodeEntities.addAll(barcodeRepository.findAllByProductNameContains(search));
         barcodeEntities.addAll(barcodeRepository.findAllByProductCompanyContains(search));
 
         model.addAttribute("barcodeForm", new BarcodeForm());
         model.addAttribute("allBarcodes", barcodeEntities);
         model.addAttribute("basket", basketService);
-        return "addBarcode";
+        return "redirect:/";
 
     }
 
@@ -67,7 +68,7 @@ public class MainController {
     public String addToBasket(@PathVariable("id") int id){
 
         basketService.addProductToBasket(barcodeRepository.findById(id).orElseThrow(IllegalStateException::new));
-        return "redirect:/";
+        return "redirect:/basket";
     }
 
     @GetMapping("/remove/{id}")
@@ -75,5 +76,14 @@ public class MainController {
 
         basketService.removeProductFromBasket(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/basket")
+    public String basket(Model model) {
+        model.addAttribute("barcodeForm", new BarcodeForm());
+        model.addAttribute("basket", basketService);
+        model.addAttribute("allBarcodes", basketService.getBarcodeEntityList());
+
+        return "basket";
     }
 }

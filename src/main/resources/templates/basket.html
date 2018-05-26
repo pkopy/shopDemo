@@ -9,18 +9,43 @@
         body {
             font-family: arial, sans-serif;
         }
-        .button{
+        .add{
             background-color: #dff0f1;
-            padding: 5px;
             border-radius: 8px;
             margin: 2px;
             border: 1px solid #3293cc;
             cursor: pointer;
+            font-size: x-small;
+            text-align: center;
+            color: #000;
 
 
         }
-        .button:hover {
+        .add a, .delete a {
+            text-decoration: none;
+            text-align: center;
+            color: #000;
+            padding: 5px;
+
+        }
+        .add:hover {
             background-color: #ace3e6;
+        }
+        .delete{
+            background-color: #ef9999;
+            border-radius: 8px;
+            margin: 2px;
+            border: 1px solid #ec7272;
+            cursor: pointer;
+            font-size: x-small;
+            text-align: center;
+            text-decoration: none;
+            color: #000;
+
+
+        }
+        .delete:hover {
+            background-color: #ec7272;
         }
         table {
 
@@ -40,33 +65,34 @@
             background-color: #dddddd;
         }
         a:link, a:visited {
-            background-color: #dff0f1;
-            margin: 2px;
-            padding: 5px;
-            border-radius: 8px;
+            <!--background-color: #dff0f1;-->
+            <!--margin: 2px;-->
+            <!--padding: 5px;-->
+            <!--border-radius: 8px;-->
             color: #000;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            border: 1px solid #3293cc;
-            font-size: x-small;
+            <!--border: 1px solid #3293cc;-->
+            <!---->
         }
-        a:hover, a:active {
-            background-color: #ace3e6;
-        }
+        <!--.add a:hover, a:active {-->
+            <!--background-color: #ace3e6;-->
+        <!--}-->
+
 
     </style>
 </head>
 <body>
 <div style="text-align: center">
 
-    <form method="post" action="/" th:object="${barcodeForm}">
-        Nazwa firmy: : <input type="text" th:field="*{companyName}">
-        Nazwa produktu:: <input type="text" th:field="*{productName}">
-        Kod kreskowy: <input type="text" maxlength="13" th:field="*{barcode}">
-        Waga: <input type="number" max="200" th:field="*{weight}">
-        <input type="submit" value="Wyślij">
-    </form>
+    <!--<form method="post" action="/" th:object="${barcodeForm}">-->
+        <!--Nazwa firmy: : <input type="text" th:field="*{companyName}">-->
+        <!--Nazwa produktu:: <input type="text" th:field="*{productName}">-->
+        <!--Kod kreskowy: <input type="text" maxlength="13" th:field="*{barcode}">-->
+        <!--Waga: <input type="number" max="200" th:field="*{weight}">-->
+        <!--<input type="submit" value="Wyślij">-->
+    <!--</form>-->
 
     <br><br>
 
@@ -96,7 +122,12 @@
             <td th:text="${item.getBarcode()}"></td>
             <td th:text="${item.getWeight()}"></td>
             <td>
-                <a th:href="${basket.isInBasket(item.getId())? '/remove/' :'/add/' + item.getId()}" th:text="${basket.isInBasket(item.getId()) ? 'Usuń z koszyka':'Dodaj do koszyka' }"></a>
+                <div th:class="${basket.isInBasket(item.getId())} ? 'delete' : 'add'">
+
+                <a th:text="${basket.isInBasket(item.getId()) ? 'Usuń z koszyka':'Dodaj do koszyka' }"
+                   th:href="${(basket.isInBasket(item.getId())? '/remove/' :'/add/') + item.getId()}"></a>
+
+                </div>
             </td>
         </tr>
     </table>
